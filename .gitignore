@@ -103,7 +103,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+#.env
 .env-local
 .venv
 env/
@@ -144,9 +144,13 @@ web/.vscode/settings.json
 .ideaDataSources/
 *.iml
 api/.idea
+api/__pycache__/*
 
-api/.env
+
+#api/.env
 api/storage/*
+api/.venv/*
+api/.venv
 
 docker-legacy/volumes/app/storage/*
 docker-legacy/volumes/db/data/*
@@ -187,7 +191,7 @@ docker/volumes/matrixone/*
 docker/nginx/conf.d/default.conf
 docker/nginx/ssl/*
 !docker/nginx/ssl/.gitkeep
-docker/middleware.env
+#docker/middleware.env
 docker/docker-compose.override.yaml
 
 sdks/python-client/build
@@ -225,7 +229,7 @@ web/public/fallback-*.js
 
 # AI Assistant
 .roo/
-api/.env.backup
+#api/.env.backup
 /clickzetta
 
 # Benchmark

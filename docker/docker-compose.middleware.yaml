@@ -1,8 +1,9 @@
 services:
   # The postgres database.
   db:
-    image: postgres:15-alpine
-    restart: always
+    #image: postgres:15-alpine
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/postgres:15-alpine-linuxarm64
+    restart: no
     env_file:
       - ./middleware.env
     environment:
@@ -37,8 +38,9 @@ services:
 
   # The redis cache.
   redis:
-    image: redis:6-alpine
-    restart: always
+    #image: redis:6-alpine
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/redis:6-alpine-linuxarm64
+    restart: no
     env_file:
       - ./middleware.env
     environment:
@@ -59,8 +61,9 @@ services:
 
   # The DifySandbox
   sandbox:
-    image: langgenius/dify-sandbox:0.2.12
-    restart: always
+    #image: langgenius/dify-sandbox:0.2.12
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-sandbox:0.2.12-linuxarm64
+    restart: no
     env_file:
       - ./middleware.env
     environment:
@@ -85,8 +88,11 @@ services:
 
   # plugin daemon
   plugin_daemon:
-    image: langgenius/dify-plugin-daemon:0.3.0-local
-    restart: always
+    #image: langgenius/dify-plugin-daemon:0.3.0-local
+    #image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local-linuxarm64
+    #image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local-linuxarm64
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local
+    restart: no
     env_file:
       - ./middleware.env
     environment:
@@ -152,8 +158,9 @@ services:
   # for more information, please refer to
   # https://docs.dify.ai/learn-more/faq/install-faq#18-why-is-ssrf-proxy-needed%3F
   ssrf_proxy:
-    image: ubuntu/squid:latest
-    restart: always
+    #image: ubuntu/squid:latest
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/ubuntu/squid:latest-linuxarm64
+    restart: no
     volumes:
       - ./ssrf_proxy/squid.conf.template:/etc/squid/squid.conf.template
       - ./ssrf_proxy/docker-entrypoint.sh:/docker-entrypoint-mount.sh
@@ -181,11 +188,12 @@ services:
 
   # The Weaviate vector store.
   weaviate:
-    image: semitechnologies/weaviate:1.19.0
+    #image: semitechnologies/weaviate:1.19.0
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/semitechnologies/weaviate:1.19.0-linuxarm64
     profiles:
       - ""
       - weaviate
-    restart: always
+    restart: no
     volumes:
       # Mount the Weaviate data directory to the container.
       - ${WEAVIATE_HOST_VOLUME:-./volumes/weaviate}:/var/lib/weaviate
@@ -206,6 +214,36 @@ services:
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@dify.ai}
     ports:
       - "${EXPOSE_WEAVIATE_PORT:-8080}:8080"
+
+  # Frontend web application.
+  web:
+    #image: langgenius/dify-web:1.9.0
+    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-web:1.9.0-linuxarm64
+    restart: no
+    environment:
+      CONSOLE_API_URL: ${CONSOLE_API_URL:-http://127.0.0.1:5001}
+      APP_API_URL: ${APP_API_URL:-http://127.0.0.1:5001}
+      SENTRY_DSN: ${WEB_SENTRY_DSN:-}
+      NEXT_TELEMETRY_DISABLED: ${NEXT_TELEMETRY_DISABLED:-0}
+      TEXT_GENERATION_TIMEOUT_MS: ${TEXT_GENERATION_TIMEOUT_MS:-60000}
+      CSP_WHITELIST: ${CSP_WHITELIST:-}
+      ALLOW_EMBED: ${ALLOW_EMBED:-false}
+      ALLOW_UNSAFE_DATA_SCHEME: ${ALLOW_UNSAFE_DATA_SCHEME:-false}
+      MARKETPLACE_API_URL: ${MARKETPLACE_API_URL:-https://marketplace.dify.ai}
+      MARKETPLACE_URL: ${MARKETPLACE_URL:-https://marketplace.dify.ai}
+      TOP_K_MAX_VALUE: ${TOP_K_MAX_VALUE:-}
+      INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH: ${INDEXING_MAX_SEGMENTATION_TOKENS_LENGTH:-}
+      PM2_INSTANCES: ${PM2_INSTANCES:-2}
+      LOOP_NODE_MAX_COUNT: ${LOOP_NODE_MAX_COUNT:-100}
+      MAX_TOOLS_NUM: ${MAX_TOOLS_NUM:-10}
+      MAX_PARALLEL_LIMIT: ${MAX_PARALLEL_LIMIT:-10}
+      MAX_ITERATIONS_NUM: ${MAX_ITERATIONS_NUM:-99}
+      MAX_TREE_DEPTH: ${MAX_TREE_DEPTH:-50}
+      ENABLE_WEBSITE_JINAREADER: ${ENABLE_WEBSITE_JINAREADER:-true}
+      ENABLE_WEBSITE_FIRECRAWL: ${ENABLE_WEBSITE_FIRECRAWL:-true}
+      ENABLE_WEBSITE_WATERCRAWL: ${ENABLE_WEBSITE_WATERCRAWL:-true}
+    ports:
+      - "80:3000"
 
 networks:
   # create a network between sandbox, api and ssrf_proxy, and can not access outside.
