@@ -335,6 +335,7 @@ const translation = {
     minimize: 'Izhod iz celotnega zaslona',
     maximize: 'Maksimiziraj platno',
     optional: '(neobvezno)',
+    optional_and_hidden: '(neobvezno in skrito)',
   },
   nodes: {
     common: {
@@ -442,6 +443,7 @@ const translation = {
       },
       outputVars: {
         output: 'Ustvari vsebino',
+        reasoning_content: 'Vsebina razmišljanja',
         usage: 'Informacije o uporabi modela',
       },
       singleRun: {
@@ -954,6 +956,8 @@ const translation = {
       chunksVariableIsRequired: 'Spremenljivka Chunks je obvezna',
       embeddingModelIsRequired: 'Zahteva se vgrajevalni model',
       rerankingModelIsRequired: 'Potreben je model za ponovno razvrščanje',
+      rerankingModelIsInvalid: 'Model prerazvrščanja ni veljaven',
+      embeddingModelIsInvalid: 'Vdelovalni model ni veljaven',
     },
   },
   tracing: {

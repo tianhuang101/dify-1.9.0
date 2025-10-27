@@ -325,6 +325,7 @@ const translation = {
     changeBlock: 'Ubah Node',
     runThisStep: 'Jalankan langkah ini',
     maximize: 'Maksimalkan Kanvas',
+    optional_and_hidden: '(opsional & tersembunyi)',
   },
   nodes: {
     common: {
@@ -427,6 +428,7 @@ const translation = {
       },
       outputVars: {
         output: 'Hasilkan konten',
+        reasoning_content: 'Konten penalaran',
         usage: 'Informasi Penggunaan Model',
       },
       singleRun: {
@@ -922,6 +924,8 @@ const translation = {
       chunksVariableIsRequired: 'Variabel Chunks diperlukan',
       rerankingModelIsRequired: 'Model reranking diperlukan',
       embeddingModelIsRequired: 'Model embedding diperlukan',
+      rerankingModelIsInvalid: 'Model reranking tidak valid',
+      embeddingModelIsInvalid: 'Model embedding tidak valid',
     },
   },
   tracing: {},

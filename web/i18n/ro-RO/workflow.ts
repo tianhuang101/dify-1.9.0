@@ -328,6 +328,7 @@ const translation = {
     selectNextStep: 'Selectați Pasul Următor',
     maximize: 'Maximize Canvas',
     minimize: 'Iesi din modul pe tot ecranul',
+    optional_and_hidden: '(opțional și ascuns)',
   },
   nodes: {
     common: {
@@ -444,6 +445,7 @@ const translation = {
       },
       outputVars: {
         output: 'Conținut generat',
+        reasoning_content: 'Conținut de raționament',
         usage: 'Informații de utilizare a modelului',
       },
       singleRun: {
@@ -947,6 +949,8 @@ const translation = {
       chunksVariableIsRequired: 'Variabila Chunks este obligatorie',
       embeddingModelIsRequired: 'Este necesar un model de încorporare',
       rerankingModelIsRequired: 'Este necesar un model de reordonare',
+      rerankingModelIsInvalid: 'Modelul de reordonare este invalid',
+      embeddingModelIsInvalid: 'Modelul de încorporare este invalid',
     },
   },
   tracing: {

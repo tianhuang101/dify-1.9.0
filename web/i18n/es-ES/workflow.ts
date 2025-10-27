@@ -328,6 +328,7 @@ const translation = {
     selectNextStep: 'Seleccionar siguiente paso',
     maximize: 'Maximizar Canvas',
     minimize: 'Salir de pantalla completa',
+    optional_and_hidden: '(opcional y oculto)',
   },
   nodes: {
     common: {
@@ -444,6 +445,7 @@ const translation = {
       },
       outputVars: {
         output: 'Generar contenido',
+        reasoning_content: 'Contenido de razonamiento',
         usage: 'Información de uso del modelo',
       },
       singleRun: {
@@ -947,6 +949,8 @@ const translation = {
       embeddingModelIsRequired: 'Se requiere un modelo de incrustación',
       rerankingModelIsRequired: 'Se requiere un modelo de reordenamiento',
       chunksVariableIsRequired: 'La variable Chunks es obligatoria',
+      rerankingModelIsInvalid: 'El modelo de reordenación no es válido',
+      embeddingModelIsInvalid: 'El modelo de incrustación no es válido',
     },
   },
   tracing: {

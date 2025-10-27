@@ -16,6 +16,8 @@ services:
                -c 'work_mem=${POSTGRES_WORK_MEM:-4MB}'
                -c 'maintenance_work_mem=${POSTGRES_MAINTENANCE_WORK_MEM:-64MB}'
                -c 'effective_cache_size=${POSTGRES_EFFECTIVE_CACHE_SIZE:-4096MB}'
+               -c 'statement_timeout=${POSTGRES_STATEMENT_TIMEOUT:-0}'
+               -c 'idle_in_transaction_session_timeout=${POSTGRES_IDLE_IN_TRANSACTION_SESSION_TIMEOUT:-0}'
     volumes:
       - ${PGDATA_HOST_VOLUME:-./volumes/db/data}:/var/lib/postgresql/data
     ports:
@@ -88,11 +90,8 @@ services:
 
   # plugin daemon
   plugin_daemon:
-    #image: langgenius/dify-plugin-daemon:0.3.0-local
-    #image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local-linuxarm64
-    #image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local-linuxarm64
-    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/langgenius/dify-plugin-daemon:0.3.0-local
-    restart: no
+    image: langgenius/dify-plugin-daemon:0.3.3-local
+    restart: always
     env_file:
       - ./middleware.env
     environment:
@@ -188,8 +187,7 @@ services:
 
   # The Weaviate vector store.
   weaviate:
-    #image: semitechnologies/weaviate:1.19.0
-    image: swr.cn-north-4.myhuaweicloud.com/ddn-k8s/docker.io/semitechnologies/weaviate:1.19.0-linuxarm64
+    image: semitechnologies/weaviate:1.27.0
     profiles:
       - ""
       - weaviate
@@ -214,6 +212,7 @@ services:
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@dify.ai}
     ports:
       - "${EXPOSE_WEAVIATE_PORT:-8080}:8080"
+      - "${EXPOSE_WEAVIATE_GRPC_PORT:-50051}:50051"
 
   # Frontend web application.
   web:
